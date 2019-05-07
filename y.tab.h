@@ -59,12 +59,13 @@ extern int yydebug;
     OR = 269,
     NOT = 270,
     DOUBLECOLON = 271,
-    LE = 272,
-    GE = 273,
-    EQ = 274,
-    NE = 275,
-    LT = 276,
-    GT = 277
+    WHILE = 272,
+    LE = 273,
+    GE = 274,
+    EQ = 275,
+    NE = 276,
+    LT = 277,
+    GT = 278
   };
 #endif
 /* Tokens.  */
@@ -82,16 +83,29 @@ extern int yydebug;
 #define OR 269
 #define NOT 270
 #define DOUBLECOLON 271
-#define LE 272
-#define GE 273
-#define EQ 274
-#define NE 275
-#define LT 276
-#define GT 277
+#define WHILE 272
+#define LE 273
+#define GE 274
+#define EQ 275
+#define NE 276
+#define LT 277
+#define GT 278
 
 /* Value type.  */
 #if ! defined YYSTYPE && ! defined YYSTYPE_IS_DECLARED
-typedef int YYSTYPE;
+
+union YYSTYPE
+{
+#line 40 "scanner.y" /* yacc.c:1909  */
+
+	int iVal;
+	float fVal;
+	char *sVal;
+
+#line 106 "y.tab.h" /* yacc.c:1909  */
+};
+
+typedef union YYSTYPE YYSTYPE;
 # define YYSTYPE_IS_TRIVIAL 1
 # define YYSTYPE_IS_DECLARED 1
 #endif

@@ -23,129 +23,135 @@ Grammar
 
    13 CompoundStatement: '{' StatementList '}'
 
-   14 StatementList: StatementList Statement
+   14 StatementList: Statement StatementList
    15              | %empty
 
    16 Statement: Declaration
    17          | IfBlockStatements
+   18          | WhileStatement
 
-   18 IfBlockStatements: IfStatement ElseIfStatement ElseStatement
+   19 IfBlockStatements: IfStatement ElseIfStatement ElseStatement
 
-   19 IfStatement: IF '(' Expression ')' '{' StatementList '}'
+   20 IfStatement: IF '(' Expression ')' '{' StatementList '}'
 
-   20 ElseIfStatement: ELSEIF '(' Expression ')' '{' StatementList '}'
-   21                | %empty
+   21 ElseIfStatement: ELSEIF '(' Expression ')' '{' StatementList '}'
+   22                | %empty
 
-   22 ElseStatement: ELSE '{' StatementList '}'
-   23              | %empty
+   23 ElseStatement: ELSE '{' StatementList '}'
+   24              | %empty
 
-   24 Expression: Expression LE Expression
-   25           | Expression GE Expression
-   26           | Expression NE Expression
-   27           | Expression EQ Expression
-   28           | Expression GT Expression
-   29           | Expression LT Expression
-   30           | Expression OR Expression
-   31           | Expression AND Expression
-   32           | NOT Expression
-   33           | ID
-   34           | NUM
+   25 WhileStatement: WHILE '(' Expression ')' '{' StatementList '}'
 
-   35 Assignment: ID ':' Assignment
-   36           | ID '+' Assignment
-   37           | ID '-' Assignment
-   38           | ID '*' Assignment
-   39           | ID '/' Assignment
-   40           | NUM '+' Assignment
-   41           | NUM '-' Assignment
-   42           | NUM '*' Assignment
-   43           | NUM '/' Assignment
-   44           | NUM
-   45           | ID
+   26 Expression: Expression LE Expression
+   27           | Expression GE Expression
+   28           | Expression NE Expression
+   29           | Expression EQ Expression
+   30           | Expression GT Expression
+   31           | Expression LT Expression
+   32           | Expression OR Expression
+   33           | Expression AND Expression
+   34           | NOT Expression
+   35           | ID
+   36           | NUM
 
-   46 Type: INT
-   47     | FLOAT
-   48     | CHAR
-   49     | DOUBLE
-   50     | VOID
+   37 Assignment: ID ':' Assignment
+   38           | ID '+' Assignment
+   39           | ID '-' Assignment
+   40           | ID '*' Assignment
+   41           | ID '/' Assignment
+   42           | NUM '+' Assignment
+   43           | NUM '-' Assignment
+   44           | NUM '*' Assignment
+   45           | NUM '/' Assignment
+   46           | NUM
+   47           | ID
+
+   48 Type: INT
+   49     | FLOAT
+   50     | CHAR
+   51     | DOUBLE
+   52     | VOID
 
 
 Terminals, with rules where they appear
 
 $end (0) 0
-'(' (40) 7 19 20
-')' (41) 7 19 20
-'*' (42) 38 42
-'+' (43) 36 40
+'(' (40) 7 20 21 25
+')' (41) 7 20 21 25
+'*' (42) 40 44
+'+' (43) 38 42
 ',' (44) 10
-'-' (45) 37 41
-'/' (47) 39 43
-':' (58) 35
-'{' (123) 13 19 20 22
-'}' (125) 13 19 20 22
+'-' (45) 39 43
+'/' (47) 41 45
+':' (58) 37
+'{' (123) 13 20 21 23 25
+'}' (125) 13 20 21 23 25
 error (256)
-INT (258) 46
-FLOAT (259) 47
-CHAR (260) 48
-DOUBLE (261) 49
-VOID (262) 50
-IF (263) 19
-ELSEIF (264) 20
-ELSE (265) 22
-NUM (266) 34 40 41 42 43 44
-ID (267) 7 12 33 35 36 37 38 39 45
-AND (268) 31
-OR (269) 30
-NOT (270) 32
+INT (258) 48
+FLOAT (259) 49
+CHAR (260) 50
+DOUBLE (261) 51
+VOID (262) 52
+IF (263) 20
+ELSEIF (264) 21
+ELSE (265) 23
+NUM (266) 36 42 43 44 45 46
+ID (267) 7 12 35 37 38 39 40 41 47
+AND (268) 33
+OR (269) 32
+NOT (270) 34
 DOUBLECOLON (271) 7
-LE (272) 24
-GE (273) 25
-EQ (274) 27
-NE (275) 26
-LT (276) 29
-GT (277) 28
+WHILE (272) 25
+LE (273) 26
+GE (274) 27
+EQ (275) 29
+NE (276) 28
+LT (277) 31
+GT (278) 30
 
 
 Nonterminals, with rules where they appear
 
-$accept (33)
+$accept (34)
     on left: 0
-start (34)
+start (35)
     on left: 1, on right: 0
-External_Declaration (35)
+External_Declaration (36)
     on left: 2 3 4, on right: 1 2 3
-Declaration (36)
+Declaration (37)
     on left: 5 6, on right: 2 16
-Function (37)
+Function (38)
     on left: 7, on right: 3
-ArgListOpt (38)
+ArgListOpt (39)
     on left: 8 9, on right: 7
-ArgList (39)
+ArgList (40)
     on left: 10 11, on right: 8 10
-Arg (40)
+Arg (41)
     on left: 12, on right: 10 11
-CompoundStatement (41)
+CompoundStatement (42)
     on left: 13, on right: 7
-StatementList (42)
-    on left: 14 15, on right: 13 14 19 20 22
-Statement (43)
-    on left: 16 17, on right: 14
-IfBlockStatements (44)
-    on left: 18, on right: 17
-IfStatement (45)
-    on left: 19, on right: 18
-ElseIfStatement (46)
-    on left: 20 21, on right: 18
-ElseStatement (47)
-    on left: 22 23, on right: 18
-Expression (48)
-    on left: 24 25 26 27 28 29 30 31 32 33 34, on right: 19 20 24 25
-    26 27 28 29 30 31 32
-Assignment (49)
-    on left: 35 36 37 38 39 40 41 42 43 44 45, on right: 5 6 35 36
-    37 38 39 40 41 42 43
-Type (50)
-    on left: 46 47 48 49 50, on right: 5 7 12
+StatementList (43)
+    on left: 14 15, on right: 13 14 20 21 23 25
+Statement (44)
+    on left: 16 17 18, on right: 14
+IfBlockStatements (45)
+    on left: 19, on right: 17
+IfStatement (46)
+    on left: 20, on right: 19
+ElseIfStatement (47)
+    on left: 21 22, on right: 19
+ElseStatement (48)
+    on left: 23 24, on right: 19
+WhileStatement (49)
+    on left: 25, on right: 18
+Expression (50)
+    on left: 26 27 28 29 30 31 32 33 34 35 36, on right: 20 21 25 26
+    27 28 29 30 31 32 33 34
+Assignment (51)
+    on left: 37 38 39 40 41 42 43 44 45 46 47, on right: 5 6 37 38
+    39 40 41 42 43 44 45
+Type (52)
+    on left: 48 49 50 51 52, on right: 5 7 12
 
 
 State 0
@@ -196,63 +202,63 @@ State 3
 
 State 4
 
-   46 Type: INT .
-
-    $default  reduce using rule 46 (Type)
-
-
-State 5
-
-   47 Type: FLOAT .
-
-    $default  reduce using rule 47 (Type)
-
-
-State 6
-
-   48 Type: CHAR .
+   48 Type: INT .
 
     $default  reduce using rule 48 (Type)
 
 
-State 7
+State 5
 
-   49 Type: DOUBLE .
+   49 Type: FLOAT .
 
     $default  reduce using rule 49 (Type)
 
 
-State 8
+State 6
 
-   50 Type: VOID .
+   50 Type: CHAR .
 
     $default  reduce using rule 50 (Type)
 
 
+State 7
+
+   51 Type: DOUBLE .
+
+    $default  reduce using rule 51 (Type)
+
+
+State 8
+
+   52 Type: VOID .
+
+    $default  reduce using rule 52 (Type)
+
+
 State 9
 
-   40 Assignment: NUM . '+' Assignment
-   41           | NUM . '-' Assignment
-   42           | NUM . '*' Assignment
-   43           | NUM . '/' Assignment
-   44           | NUM .
+   42 Assignment: NUM . '+' Assignment
+   43           | NUM . '-' Assignment
+   44           | NUM . '*' Assignment
+   45           | NUM . '/' Assignment
+   46           | NUM .
 
     '+'  shift, and go to state 15
     '-'  shift, and go to state 16
     '*'  shift, and go to state 17
     '/'  shift, and go to state 18
 
-    $default  reduce using rule 44 (Assignment)
+    $default  reduce using rule 46 (Assignment)
 
 
 State 10
 
-   35 Assignment: ID . ':' Assignment
-   36           | ID . '+' Assignment
-   37           | ID . '-' Assignment
-   38           | ID . '*' Assignment
-   39           | ID . '/' Assignment
-   45           | ID .
+   37 Assignment: ID . ':' Assignment
+   38           | ID . '+' Assignment
+   39           | ID . '-' Assignment
+   40           | ID . '*' Assignment
+   41           | ID . '/' Assignment
+   47           | ID .
 
     ':'  shift, and go to state 19
     '+'  shift, and go to state 20
@@ -260,7 +266,7 @@ State 10
     '*'  shift, and go to state 22
     '/'  shift, and go to state 23
 
-    $default  reduce using rule 45 (Assignment)
+    $default  reduce using rule 47 (Assignment)
 
 
 State 11
@@ -298,7 +304,7 @@ State 14
 
 State 15
 
-   40 Assignment: NUM '+' . Assignment
+   42 Assignment: NUM '+' . Assignment
 
     NUM  shift, and go to state 9
     ID   shift, and go to state 10
@@ -308,7 +314,7 @@ State 15
 
 State 16
 
-   41 Assignment: NUM '-' . Assignment
+   43 Assignment: NUM '-' . Assignment
 
     NUM  shift, and go to state 9
     ID   shift, and go to state 10
@@ -318,7 +324,7 @@ State 16
 
 State 17
 
-   42 Assignment: NUM '*' . Assignment
+   44 Assignment: NUM '*' . Assignment
 
     NUM  shift, and go to state 9
     ID   shift, and go to state 10
@@ -328,7 +334,7 @@ State 17
 
 State 18
 
-   43 Assignment: NUM '/' . Assignment
+   45 Assignment: NUM '/' . Assignment
 
     NUM  shift, and go to state 9
     ID   shift, and go to state 10
@@ -338,7 +344,7 @@ State 18
 
 State 19
 
-   35 Assignment: ID ':' . Assignment
+   37 Assignment: ID ':' . Assignment
 
     NUM  shift, and go to state 9
     ID   shift, and go to state 10
@@ -348,7 +354,7 @@ State 19
 
 State 20
 
-   36 Assignment: ID '+' . Assignment
+   38 Assignment: ID '+' . Assignment
 
     NUM  shift, and go to state 9
     ID   shift, and go to state 10
@@ -358,7 +364,7 @@ State 20
 
 State 21
 
-   37 Assignment: ID '-' . Assignment
+   39 Assignment: ID '-' . Assignment
 
     NUM  shift, and go to state 9
     ID   shift, and go to state 10
@@ -368,7 +374,7 @@ State 21
 
 State 22
 
-   38 Assignment: ID '*' . Assignment
+   40 Assignment: ID '*' . Assignment
 
     NUM  shift, and go to state 9
     ID   shift, and go to state 10
@@ -378,7 +384,7 @@ State 22
 
 State 23
 
-   39 Assignment: ID '/' . Assignment
+   41 Assignment: ID '/' . Assignment
 
     NUM  shift, and go to state 9
     ID   shift, and go to state 10
@@ -402,65 +408,65 @@ State 25
 
 State 26
 
-   40 Assignment: NUM '+' Assignment .
-
-    $default  reduce using rule 40 (Assignment)
-
-
-State 27
-
-   41 Assignment: NUM '-' Assignment .
-
-    $default  reduce using rule 41 (Assignment)
-
-
-State 28
-
-   42 Assignment: NUM '*' Assignment .
+   42 Assignment: NUM '+' Assignment .
 
     $default  reduce using rule 42 (Assignment)
 
 
-State 29
+State 27
 
-   43 Assignment: NUM '/' Assignment .
+   43 Assignment: NUM '-' Assignment .
 
     $default  reduce using rule 43 (Assignment)
 
 
+State 28
+
+   44 Assignment: NUM '*' Assignment .
+
+    $default  reduce using rule 44 (Assignment)
+
+
+State 29
+
+   45 Assignment: NUM '/' Assignment .
+
+    $default  reduce using rule 45 (Assignment)
+
+
 State 30
 
-   35 Assignment: ID ':' Assignment .
-
-    $default  reduce using rule 35 (Assignment)
-
-
-State 31
-
-   36 Assignment: ID '+' Assignment .
-
-    $default  reduce using rule 36 (Assignment)
-
-
-State 32
-
-   37 Assignment: ID '-' Assignment .
+   37 Assignment: ID ':' Assignment .
 
     $default  reduce using rule 37 (Assignment)
 
 
-State 33
+State 31
 
-   38 Assignment: ID '*' Assignment .
+   38 Assignment: ID '+' Assignment .
 
     $default  reduce using rule 38 (Assignment)
 
 
-State 34
+State 32
 
-   39 Assignment: ID '/' Assignment .
+   39 Assignment: ID '-' Assignment .
 
     $default  reduce using rule 39 (Assignment)
+
+
+State 33
+
+   40 Assignment: ID '*' Assignment .
+
+    $default  reduce using rule 40 (Assignment)
+
+
+State 34
+
+   41 Assignment: ID '/' Assignment .
+
+    $default  reduce using rule 41 (Assignment)
 
 
 State 35
@@ -553,9 +559,26 @@ State 44
 
    13 CompoundStatement: '{' . StatementList '}'
 
+    INT     shift, and go to state 4
+    FLOAT   shift, and go to state 5
+    CHAR    shift, and go to state 6
+    DOUBLE  shift, and go to state 7
+    VOID    shift, and go to state 8
+    IF      shift, and go to state 47
+    NUM     shift, and go to state 9
+    ID      shift, and go to state 10
+    WHILE   shift, and go to state 48
+
     $default  reduce using rule 15 (StatementList)
 
-    StatementList  go to state 47
+    Declaration        go to state 49
+    StatementList      go to state 50
+    Statement          go to state 51
+    IfBlockStatements  go to state 52
+    IfStatement        go to state 53
+    WhileStatement     go to state 54
+    Assignment         go to state 13
+    Type               go to state 55
 
 
 State 45
@@ -574,53 +597,56 @@ State 46
 
 State 47
 
-   13 CompoundStatement: '{' StatementList . '}'
-   14 StatementList: StatementList . Statement
+   20 IfStatement: IF . '(' Expression ')' '{' StatementList '}'
 
-    INT     shift, and go to state 4
-    FLOAT   shift, and go to state 5
-    CHAR    shift, and go to state 6
-    DOUBLE  shift, and go to state 7
-    VOID    shift, and go to state 8
-    IF      shift, and go to state 48
-    NUM     shift, and go to state 9
-    ID      shift, and go to state 10
-    '}'     shift, and go to state 49
-
-    Declaration        go to state 50
-    Statement          go to state 51
-    IfBlockStatements  go to state 52
-    IfStatement        go to state 53
-    Assignment         go to state 13
-    Type               go to state 54
+    '('  shift, and go to state 56
 
 
 State 48
 
-   19 IfStatement: IF . '(' Expression ')' '{' StatementList '}'
+   25 WhileStatement: WHILE . '(' Expression ')' '{' StatementList '}'
 
-    '('  shift, and go to state 55
+    '('  shift, and go to state 57
 
 
 State 49
-
-   13 CompoundStatement: '{' StatementList '}' .
-
-    $default  reduce using rule 13 (CompoundStatement)
-
-
-State 50
 
    16 Statement: Declaration .
 
     $default  reduce using rule 16 (Statement)
 
 
+State 50
+
+   13 CompoundStatement: '{' StatementList . '}'
+
+    '}'  shift, and go to state 58
+
+
 State 51
 
-   14 StatementList: StatementList Statement .
+   14 StatementList: Statement . StatementList
 
-    $default  reduce using rule 14 (StatementList)
+    INT     shift, and go to state 4
+    FLOAT   shift, and go to state 5
+    CHAR    shift, and go to state 6
+    DOUBLE  shift, and go to state 7
+    VOID    shift, and go to state 8
+    IF      shift, and go to state 47
+    NUM     shift, and go to state 9
+    ID      shift, and go to state 10
+    WHILE   shift, and go to state 48
+
+    $default  reduce using rule 15 (StatementList)
+
+    Declaration        go to state 49
+    StatementList      go to state 59
+    Statement          go to state 51
+    IfBlockStatements  go to state 52
+    IfStatement        go to state 53
+    WhileStatement     go to state 54
+    Assignment         go to state 13
+    Type               go to state 55
 
 
 State 52
@@ -632,16 +658,23 @@ State 52
 
 State 53
 
-   18 IfBlockStatements: IfStatement . ElseIfStatement ElseStatement
+   19 IfBlockStatements: IfStatement . ElseIfStatement ElseStatement
 
-    ELSEIF  shift, and go to state 56
+    ELSEIF  shift, and go to state 60
 
-    $default  reduce using rule 21 (ElseIfStatement)
+    $default  reduce using rule 22 (ElseIfStatement)
 
-    ElseIfStatement  go to state 57
+    ElseIfStatement  go to state 61
 
 
 State 54
+
+   18 Statement: WhileStatement .
+
+    $default  reduce using rule 18 (Statement)
+
+
+State 55
 
     5 Declaration: Type . Assignment
 
@@ -651,495 +684,593 @@ State 54
     Assignment  go to state 25
 
 
-State 55
-
-   19 IfStatement: IF '(' . Expression ')' '{' StatementList '}'
-
-    NUM  shift, and go to state 58
-    ID   shift, and go to state 59
-    NOT  shift, and go to state 60
-
-    Expression  go to state 61
-
-
 State 56
 
-   20 ElseIfStatement: ELSEIF . '(' Expression ')' '{' StatementList '}'
+   20 IfStatement: IF '(' . Expression ')' '{' StatementList '}'
 
-    '('  shift, and go to state 62
-
-
-State 57
-
-   18 IfBlockStatements: IfStatement ElseIfStatement . ElseStatement
-
-    ELSE  shift, and go to state 63
-
-    $default  reduce using rule 23 (ElseStatement)
-
-    ElseStatement  go to state 64
-
-
-State 58
-
-   34 Expression: NUM .
-
-    $default  reduce using rule 34 (Expression)
-
-
-State 59
-
-   33 Expression: ID .
-
-    $default  reduce using rule 33 (Expression)
-
-
-State 60
-
-   32 Expression: NOT . Expression
-
-    NUM  shift, and go to state 58
-    ID   shift, and go to state 59
-    NOT  shift, and go to state 60
+    NUM  shift, and go to state 62
+    ID   shift, and go to state 63
+    NOT  shift, and go to state 64
 
     Expression  go to state 65
 
 
+State 57
+
+   25 WhileStatement: WHILE '(' . Expression ')' '{' StatementList '}'
+
+    NUM  shift, and go to state 62
+    ID   shift, and go to state 63
+    NOT  shift, and go to state 64
+
+    Expression  go to state 66
+
+
+State 58
+
+   13 CompoundStatement: '{' StatementList '}' .
+
+    $default  reduce using rule 13 (CompoundStatement)
+
+
+State 59
+
+   14 StatementList: Statement StatementList .
+
+    $default  reduce using rule 14 (StatementList)
+
+
+State 60
+
+   21 ElseIfStatement: ELSEIF . '(' Expression ')' '{' StatementList '}'
+
+    '('  shift, and go to state 67
+
+
 State 61
 
-   19 IfStatement: IF '(' Expression . ')' '{' StatementList '}'
-   24 Expression: Expression . LE Expression
-   25           | Expression . GE Expression
-   26           | Expression . NE Expression
-   27           | Expression . EQ Expression
-   28           | Expression . GT Expression
-   29           | Expression . LT Expression
-   30           | Expression . OR Expression
-   31           | Expression . AND Expression
+   19 IfBlockStatements: IfStatement ElseIfStatement . ElseStatement
 
-    AND  shift, and go to state 66
-    OR   shift, and go to state 67
-    LE   shift, and go to state 68
-    GE   shift, and go to state 69
-    EQ   shift, and go to state 70
-    NE   shift, and go to state 71
-    LT   shift, and go to state 72
-    GT   shift, and go to state 73
-    ')'  shift, and go to state 74
+    ELSE  shift, and go to state 68
+
+    $default  reduce using rule 24 (ElseStatement)
+
+    ElseStatement  go to state 69
 
 
 State 62
 
-   20 ElseIfStatement: ELSEIF '(' . Expression ')' '{' StatementList '}'
+   36 Expression: NUM .
 
-    NUM  shift, and go to state 58
-    ID   shift, and go to state 59
-    NOT  shift, and go to state 60
-
-    Expression  go to state 75
+    $default  reduce using rule 36 (Expression)
 
 
 State 63
 
-   22 ElseStatement: ELSE . '{' StatementList '}'
+   35 Expression: ID .
 
-    '{'  shift, and go to state 76
+    $default  reduce using rule 35 (Expression)
 
 
 State 64
 
-   18 IfBlockStatements: IfStatement ElseIfStatement ElseStatement .
+   34 Expression: NOT . Expression
 
-    $default  reduce using rule 18 (IfBlockStatements)
+    NUM  shift, and go to state 62
+    ID   shift, and go to state 63
+    NOT  shift, and go to state 64
+
+    Expression  go to state 70
 
 
 State 65
 
-   24 Expression: Expression . LE Expression
-   25           | Expression . GE Expression
-   26           | Expression . NE Expression
-   27           | Expression . EQ Expression
-   28           | Expression . GT Expression
-   29           | Expression . LT Expression
-   30           | Expression . OR Expression
-   31           | Expression . AND Expression
-   32           | NOT Expression .
+   20 IfStatement: IF '(' Expression . ')' '{' StatementList '}'
+   26 Expression: Expression . LE Expression
+   27           | Expression . GE Expression
+   28           | Expression . NE Expression
+   29           | Expression . EQ Expression
+   30           | Expression . GT Expression
+   31           | Expression . LT Expression
+   32           | Expression . OR Expression
+   33           | Expression . AND Expression
 
-    $default  reduce using rule 32 (Expression)
+    AND  shift, and go to state 71
+    OR   shift, and go to state 72
+    LE   shift, and go to state 73
+    GE   shift, and go to state 74
+    EQ   shift, and go to state 75
+    NE   shift, and go to state 76
+    LT   shift, and go to state 77
+    GT   shift, and go to state 78
+    ')'  shift, and go to state 79
 
 
 State 66
 
-   31 Expression: Expression AND . Expression
+   25 WhileStatement: WHILE '(' Expression . ')' '{' StatementList '}'
+   26 Expression: Expression . LE Expression
+   27           | Expression . GE Expression
+   28           | Expression . NE Expression
+   29           | Expression . EQ Expression
+   30           | Expression . GT Expression
+   31           | Expression . LT Expression
+   32           | Expression . OR Expression
+   33           | Expression . AND Expression
 
-    NUM  shift, and go to state 58
-    ID   shift, and go to state 59
-    NOT  shift, and go to state 60
-
-    Expression  go to state 77
+    AND  shift, and go to state 71
+    OR   shift, and go to state 72
+    LE   shift, and go to state 73
+    GE   shift, and go to state 74
+    EQ   shift, and go to state 75
+    NE   shift, and go to state 76
+    LT   shift, and go to state 77
+    GT   shift, and go to state 78
+    ')'  shift, and go to state 80
 
 
 State 67
 
-   30 Expression: Expression OR . Expression
+   21 ElseIfStatement: ELSEIF '(' . Expression ')' '{' StatementList '}'
 
-    NUM  shift, and go to state 58
-    ID   shift, and go to state 59
-    NOT  shift, and go to state 60
-
-    Expression  go to state 78
-
-
-State 68
-
-   24 Expression: Expression LE . Expression
-
-    NUM  shift, and go to state 58
-    ID   shift, and go to state 59
-    NOT  shift, and go to state 60
-
-    Expression  go to state 79
-
-
-State 69
-
-   25 Expression: Expression GE . Expression
-
-    NUM  shift, and go to state 58
-    ID   shift, and go to state 59
-    NOT  shift, and go to state 60
-
-    Expression  go to state 80
-
-
-State 70
-
-   27 Expression: Expression EQ . Expression
-
-    NUM  shift, and go to state 58
-    ID   shift, and go to state 59
-    NOT  shift, and go to state 60
+    NUM  shift, and go to state 62
+    ID   shift, and go to state 63
+    NOT  shift, and go to state 64
 
     Expression  go to state 81
 
 
+State 68
+
+   23 ElseStatement: ELSE . '{' StatementList '}'
+
+    '{'  shift, and go to state 82
+
+
+State 69
+
+   19 IfBlockStatements: IfStatement ElseIfStatement ElseStatement .
+
+    $default  reduce using rule 19 (IfBlockStatements)
+
+
+State 70
+
+   26 Expression: Expression . LE Expression
+   27           | Expression . GE Expression
+   28           | Expression . NE Expression
+   29           | Expression . EQ Expression
+   30           | Expression . GT Expression
+   31           | Expression . LT Expression
+   32           | Expression . OR Expression
+   33           | Expression . AND Expression
+   34           | NOT Expression .
+
+    $default  reduce using rule 34 (Expression)
+
+
 State 71
 
-   26 Expression: Expression NE . Expression
+   33 Expression: Expression AND . Expression
 
-    NUM  shift, and go to state 58
-    ID   shift, and go to state 59
-    NOT  shift, and go to state 60
-
-    Expression  go to state 82
-
-
-State 72
-
-   29 Expression: Expression LT . Expression
-
-    NUM  shift, and go to state 58
-    ID   shift, and go to state 59
-    NOT  shift, and go to state 60
+    NUM  shift, and go to state 62
+    ID   shift, and go to state 63
+    NOT  shift, and go to state 64
 
     Expression  go to state 83
 
 
-State 73
+State 72
 
-   28 Expression: Expression GT . Expression
+   32 Expression: Expression OR . Expression
 
-    NUM  shift, and go to state 58
-    ID   shift, and go to state 59
-    NOT  shift, and go to state 60
+    NUM  shift, and go to state 62
+    ID   shift, and go to state 63
+    NOT  shift, and go to state 64
 
     Expression  go to state 84
 
 
+State 73
+
+   26 Expression: Expression LE . Expression
+
+    NUM  shift, and go to state 62
+    ID   shift, and go to state 63
+    NOT  shift, and go to state 64
+
+    Expression  go to state 85
+
+
 State 74
 
-   19 IfStatement: IF '(' Expression ')' . '{' StatementList '}'
+   27 Expression: Expression GE . Expression
 
-    '{'  shift, and go to state 85
+    NUM  shift, and go to state 62
+    ID   shift, and go to state 63
+    NOT  shift, and go to state 64
+
+    Expression  go to state 86
 
 
 State 75
 
-   20 ElseIfStatement: ELSEIF '(' Expression . ')' '{' StatementList '}'
-   24 Expression: Expression . LE Expression
-   25           | Expression . GE Expression
-   26           | Expression . NE Expression
-   27           | Expression . EQ Expression
-   28           | Expression . GT Expression
-   29           | Expression . LT Expression
-   30           | Expression . OR Expression
-   31           | Expression . AND Expression
+   29 Expression: Expression EQ . Expression
 
-    AND  shift, and go to state 66
-    OR   shift, and go to state 67
-    LE   shift, and go to state 68
-    GE   shift, and go to state 69
-    EQ   shift, and go to state 70
-    NE   shift, and go to state 71
-    LT   shift, and go to state 72
-    GT   shift, and go to state 73
-    ')'  shift, and go to state 86
+    NUM  shift, and go to state 62
+    ID   shift, and go to state 63
+    NOT  shift, and go to state 64
+
+    Expression  go to state 87
 
 
 State 76
 
-   22 ElseStatement: ELSE '{' . StatementList '}'
+   28 Expression: Expression NE . Expression
 
-    $default  reduce using rule 15 (StatementList)
+    NUM  shift, and go to state 62
+    ID   shift, and go to state 63
+    NOT  shift, and go to state 64
 
-    StatementList  go to state 87
+    Expression  go to state 88
 
 
 State 77
 
-   24 Expression: Expression . LE Expression
-   25           | Expression . GE Expression
-   26           | Expression . NE Expression
-   27           | Expression . EQ Expression
-   28           | Expression . GT Expression
-   29           | Expression . LT Expression
-   30           | Expression . OR Expression
-   31           | Expression . AND Expression
-   31           | Expression AND Expression .
+   31 Expression: Expression LT . Expression
 
-    LE  shift, and go to state 68
-    GE  shift, and go to state 69
-    EQ  shift, and go to state 70
-    NE  shift, and go to state 71
-    LT  shift, and go to state 72
-    GT  shift, and go to state 73
+    NUM  shift, and go to state 62
+    ID   shift, and go to state 63
+    NOT  shift, and go to state 64
 
-    $default  reduce using rule 31 (Expression)
+    Expression  go to state 89
 
 
 State 78
 
-   24 Expression: Expression . LE Expression
-   25           | Expression . GE Expression
-   26           | Expression . NE Expression
-   27           | Expression . EQ Expression
-   28           | Expression . GT Expression
-   29           | Expression . LT Expression
-   30           | Expression . OR Expression
-   30           | Expression OR Expression .
-   31           | Expression . AND Expression
+   30 Expression: Expression GT . Expression
 
-    AND  shift, and go to state 66
-    LE   shift, and go to state 68
-    GE   shift, and go to state 69
-    EQ   shift, and go to state 70
-    NE   shift, and go to state 71
-    LT   shift, and go to state 72
-    GT   shift, and go to state 73
+    NUM  shift, and go to state 62
+    ID   shift, and go to state 63
+    NOT  shift, and go to state 64
 
-    $default  reduce using rule 30 (Expression)
+    Expression  go to state 90
 
 
 State 79
 
-   24 Expression: Expression . LE Expression
-   24           | Expression LE Expression .
-   25           | Expression . GE Expression
-   26           | Expression . NE Expression
-   27           | Expression . EQ Expression
-   28           | Expression . GT Expression
-   29           | Expression . LT Expression
-   30           | Expression . OR Expression
-   31           | Expression . AND Expression
+   20 IfStatement: IF '(' Expression ')' . '{' StatementList '}'
 
-    $default  reduce using rule 24 (Expression)
+    '{'  shift, and go to state 91
 
 
 State 80
 
-   24 Expression: Expression . LE Expression
-   25           | Expression . GE Expression
-   25           | Expression GE Expression .
-   26           | Expression . NE Expression
-   27           | Expression . EQ Expression
-   28           | Expression . GT Expression
-   29           | Expression . LT Expression
-   30           | Expression . OR Expression
-   31           | Expression . AND Expression
+   25 WhileStatement: WHILE '(' Expression ')' . '{' StatementList '}'
 
-    $default  reduce using rule 25 (Expression)
+    '{'  shift, and go to state 92
 
 
 State 81
 
-   24 Expression: Expression . LE Expression
-   25           | Expression . GE Expression
-   26           | Expression . NE Expression
-   27           | Expression . EQ Expression
-   27           | Expression EQ Expression .
-   28           | Expression . GT Expression
-   29           | Expression . LT Expression
-   30           | Expression . OR Expression
-   31           | Expression . AND Expression
+   21 ElseIfStatement: ELSEIF '(' Expression . ')' '{' StatementList '}'
+   26 Expression: Expression . LE Expression
+   27           | Expression . GE Expression
+   28           | Expression . NE Expression
+   29           | Expression . EQ Expression
+   30           | Expression . GT Expression
+   31           | Expression . LT Expression
+   32           | Expression . OR Expression
+   33           | Expression . AND Expression
 
-    $default  reduce using rule 27 (Expression)
+    AND  shift, and go to state 71
+    OR   shift, and go to state 72
+    LE   shift, and go to state 73
+    GE   shift, and go to state 74
+    EQ   shift, and go to state 75
+    NE   shift, and go to state 76
+    LT   shift, and go to state 77
+    GT   shift, and go to state 78
+    ')'  shift, and go to state 93
 
 
 State 82
 
-   24 Expression: Expression . LE Expression
-   25           | Expression . GE Expression
-   26           | Expression . NE Expression
-   26           | Expression NE Expression .
-   27           | Expression . EQ Expression
-   28           | Expression . GT Expression
-   29           | Expression . LT Expression
-   30           | Expression . OR Expression
-   31           | Expression . AND Expression
+   23 ElseStatement: ELSE '{' . StatementList '}'
 
-    $default  reduce using rule 26 (Expression)
+    INT     shift, and go to state 4
+    FLOAT   shift, and go to state 5
+    CHAR    shift, and go to state 6
+    DOUBLE  shift, and go to state 7
+    VOID    shift, and go to state 8
+    IF      shift, and go to state 47
+    NUM     shift, and go to state 9
+    ID      shift, and go to state 10
+    WHILE   shift, and go to state 48
+
+    $default  reduce using rule 15 (StatementList)
+
+    Declaration        go to state 49
+    StatementList      go to state 94
+    Statement          go to state 51
+    IfBlockStatements  go to state 52
+    IfStatement        go to state 53
+    WhileStatement     go to state 54
+    Assignment         go to state 13
+    Type               go to state 55
 
 
 State 83
 
-   24 Expression: Expression . LE Expression
-   25           | Expression . GE Expression
-   26           | Expression . NE Expression
-   27           | Expression . EQ Expression
-   28           | Expression . GT Expression
-   29           | Expression . LT Expression
-   29           | Expression LT Expression .
-   30           | Expression . OR Expression
-   31           | Expression . AND Expression
+   26 Expression: Expression . LE Expression
+   27           | Expression . GE Expression
+   28           | Expression . NE Expression
+   29           | Expression . EQ Expression
+   30           | Expression . GT Expression
+   31           | Expression . LT Expression
+   32           | Expression . OR Expression
+   33           | Expression . AND Expression
+   33           | Expression AND Expression .
 
-    $default  reduce using rule 29 (Expression)
+    LE  shift, and go to state 73
+    GE  shift, and go to state 74
+    EQ  shift, and go to state 75
+    NE  shift, and go to state 76
+    LT  shift, and go to state 77
+    GT  shift, and go to state 78
+
+    $default  reduce using rule 33 (Expression)
 
 
 State 84
 
-   24 Expression: Expression . LE Expression
-   25           | Expression . GE Expression
-   26           | Expression . NE Expression
-   27           | Expression . EQ Expression
-   28           | Expression . GT Expression
-   28           | Expression GT Expression .
-   29           | Expression . LT Expression
-   30           | Expression . OR Expression
-   31           | Expression . AND Expression
+   26 Expression: Expression . LE Expression
+   27           | Expression . GE Expression
+   28           | Expression . NE Expression
+   29           | Expression . EQ Expression
+   30           | Expression . GT Expression
+   31           | Expression . LT Expression
+   32           | Expression . OR Expression
+   32           | Expression OR Expression .
+   33           | Expression . AND Expression
 
-    $default  reduce using rule 28 (Expression)
+    AND  shift, and go to state 71
+    LE   shift, and go to state 73
+    GE   shift, and go to state 74
+    EQ   shift, and go to state 75
+    NE   shift, and go to state 76
+    LT   shift, and go to state 77
+    GT   shift, and go to state 78
+
+    $default  reduce using rule 32 (Expression)
 
 
 State 85
 
-   19 IfStatement: IF '(' Expression ')' '{' . StatementList '}'
+   26 Expression: Expression . LE Expression
+   26           | Expression LE Expression .
+   27           | Expression . GE Expression
+   28           | Expression . NE Expression
+   29           | Expression . EQ Expression
+   30           | Expression . GT Expression
+   31           | Expression . LT Expression
+   32           | Expression . OR Expression
+   33           | Expression . AND Expression
 
-    $default  reduce using rule 15 (StatementList)
-
-    StatementList  go to state 88
+    $default  reduce using rule 26 (Expression)
 
 
 State 86
 
-   20 ElseIfStatement: ELSEIF '(' Expression ')' . '{' StatementList '}'
+   26 Expression: Expression . LE Expression
+   27           | Expression . GE Expression
+   27           | Expression GE Expression .
+   28           | Expression . NE Expression
+   29           | Expression . EQ Expression
+   30           | Expression . GT Expression
+   31           | Expression . LT Expression
+   32           | Expression . OR Expression
+   33           | Expression . AND Expression
 
-    '{'  shift, and go to state 89
+    $default  reduce using rule 27 (Expression)
 
 
 State 87
 
-   14 StatementList: StatementList . Statement
-   22 ElseStatement: ELSE '{' StatementList . '}'
+   26 Expression: Expression . LE Expression
+   27           | Expression . GE Expression
+   28           | Expression . NE Expression
+   29           | Expression . EQ Expression
+   29           | Expression EQ Expression .
+   30           | Expression . GT Expression
+   31           | Expression . LT Expression
+   32           | Expression . OR Expression
+   33           | Expression . AND Expression
 
-    INT     shift, and go to state 4
-    FLOAT   shift, and go to state 5
-    CHAR    shift, and go to state 6
-    DOUBLE  shift, and go to state 7
-    VOID    shift, and go to state 8
-    IF      shift, and go to state 48
-    NUM     shift, and go to state 9
-    ID      shift, and go to state 10
-    '}'     shift, and go to state 90
-
-    Declaration        go to state 50
-    Statement          go to state 51
-    IfBlockStatements  go to state 52
-    IfStatement        go to state 53
-    Assignment         go to state 13
-    Type               go to state 54
+    $default  reduce using rule 29 (Expression)
 
 
 State 88
 
-   14 StatementList: StatementList . Statement
-   19 IfStatement: IF '(' Expression ')' '{' StatementList . '}'
+   26 Expression: Expression . LE Expression
+   27           | Expression . GE Expression
+   28           | Expression . NE Expression
+   28           | Expression NE Expression .
+   29           | Expression . EQ Expression
+   30           | Expression . GT Expression
+   31           | Expression . LT Expression
+   32           | Expression . OR Expression
+   33           | Expression . AND Expression
 
-    INT     shift, and go to state 4
-    FLOAT   shift, and go to state 5
-    CHAR    shift, and go to state 6
-    DOUBLE  shift, and go to state 7
-    VOID    shift, and go to state 8
-    IF      shift, and go to state 48
-    NUM     shift, and go to state 9
-    ID      shift, and go to state 10
-    '}'     shift, and go to state 91
-
-    Declaration        go to state 50
-    Statement          go to state 51
-    IfBlockStatements  go to state 52
-    IfStatement        go to state 53
-    Assignment         go to state 13
-    Type               go to state 54
+    $default  reduce using rule 28 (Expression)
 
 
 State 89
 
-   20 ElseIfStatement: ELSEIF '(' Expression ')' '{' . StatementList '}'
+   26 Expression: Expression . LE Expression
+   27           | Expression . GE Expression
+   28           | Expression . NE Expression
+   29           | Expression . EQ Expression
+   30           | Expression . GT Expression
+   31           | Expression . LT Expression
+   31           | Expression LT Expression .
+   32           | Expression . OR Expression
+   33           | Expression . AND Expression
 
-    $default  reduce using rule 15 (StatementList)
-
-    StatementList  go to state 92
+    $default  reduce using rule 31 (Expression)
 
 
 State 90
 
-   22 ElseStatement: ELSE '{' StatementList '}' .
+   26 Expression: Expression . LE Expression
+   27           | Expression . GE Expression
+   28           | Expression . NE Expression
+   29           | Expression . EQ Expression
+   30           | Expression . GT Expression
+   30           | Expression GT Expression .
+   31           | Expression . LT Expression
+   32           | Expression . OR Expression
+   33           | Expression . AND Expression
 
-    $default  reduce using rule 22 (ElseStatement)
+    $default  reduce using rule 30 (Expression)
 
 
 State 91
 
-   19 IfStatement: IF '(' Expression ')' '{' StatementList '}' .
-
-    $default  reduce using rule 19 (IfStatement)
-
-
-State 92
-
-   14 StatementList: StatementList . Statement
-   20 ElseIfStatement: ELSEIF '(' Expression ')' '{' StatementList . '}'
+   20 IfStatement: IF '(' Expression ')' '{' . StatementList '}'
 
     INT     shift, and go to state 4
     FLOAT   shift, and go to state 5
     CHAR    shift, and go to state 6
     DOUBLE  shift, and go to state 7
     VOID    shift, and go to state 8
-    IF      shift, and go to state 48
+    IF      shift, and go to state 47
     NUM     shift, and go to state 9
     ID      shift, and go to state 10
-    '}'     shift, and go to state 93
+    WHILE   shift, and go to state 48
 
-    Declaration        go to state 50
+    $default  reduce using rule 15 (StatementList)
+
+    Declaration        go to state 49
+    StatementList      go to state 95
     Statement          go to state 51
     IfBlockStatements  go to state 52
     IfStatement        go to state 53
+    WhileStatement     go to state 54
     Assignment         go to state 13
-    Type               go to state 54
+    Type               go to state 55
+
+
+State 92
+
+   25 WhileStatement: WHILE '(' Expression ')' '{' . StatementList '}'
+
+    INT     shift, and go to state 4
+    FLOAT   shift, and go to state 5
+    CHAR    shift, and go to state 6
+    DOUBLE  shift, and go to state 7
+    VOID    shift, and go to state 8
+    IF      shift, and go to state 47
+    NUM     shift, and go to state 9
+    ID      shift, and go to state 10
+    WHILE   shift, and go to state 48
+
+    $default  reduce using rule 15 (StatementList)
+
+    Declaration        go to state 49
+    StatementList      go to state 96
+    Statement          go to state 51
+    IfBlockStatements  go to state 52
+    IfStatement        go to state 53
+    WhileStatement     go to state 54
+    Assignment         go to state 13
+    Type               go to state 55
 
 
 State 93
 
-   20 ElseIfStatement: ELSEIF '(' Expression ')' '{' StatementList '}' .
+   21 ElseIfStatement: ELSEIF '(' Expression ')' . '{' StatementList '}'
 
-    $default  reduce using rule 20 (ElseIfStatement)
+    '{'  shift, and go to state 97
+
+
+State 94
+
+   23 ElseStatement: ELSE '{' StatementList . '}'
+
+    '}'  shift, and go to state 98
+
+
+State 95
+
+   20 IfStatement: IF '(' Expression ')' '{' StatementList . '}'
+
+    '}'  shift, and go to state 99
+
+
+State 96
+
+   25 WhileStatement: WHILE '(' Expression ')' '{' StatementList . '}'
+
+    '}'  shift, and go to state 100
+
+
+State 97
+
+   21 ElseIfStatement: ELSEIF '(' Expression ')' '{' . StatementList '}'
+
+    INT     shift, and go to state 4
+    FLOAT   shift, and go to state 5
+    CHAR    shift, and go to state 6
+    DOUBLE  shift, and go to state 7
+    VOID    shift, and go to state 8
+    IF      shift, and go to state 47
+    NUM     shift, and go to state 9
+    ID      shift, and go to state 10
+    WHILE   shift, and go to state 48
+
+    $default  reduce using rule 15 (StatementList)
+
+    Declaration        go to state 49
+    StatementList      go to state 101
+    Statement          go to state 51
+    IfBlockStatements  go to state 52
+    IfStatement        go to state 53
+    WhileStatement     go to state 54
+    Assignment         go to state 13
+    Type               go to state 55
+
+
+State 98
+
+   23 ElseStatement: ELSE '{' StatementList '}' .
+
+    $default  reduce using rule 23 (ElseStatement)
+
+
+State 99
+
+   20 IfStatement: IF '(' Expression ')' '{' StatementList '}' .
+
+    $default  reduce using rule 20 (IfStatement)
+
+
+State 100
+
+   25 WhileStatement: WHILE '(' Expression ')' '{' StatementList '}' .
+
+    $default  reduce using rule 25 (WhileStatement)
+
+
+State 101
+
+   21 ElseIfStatement: ELSEIF '(' Expression ')' '{' StatementList . '}'
+
+    '}'  shift, and go to state 102
+
+
+State 102
+
+   21 ElseIfStatement: ELSEIF '(' Expression ')' '{' StatementList '}' .
+
+    $default  reduce using rule 21 (ElseIfStatement)
