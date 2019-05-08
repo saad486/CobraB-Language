@@ -19,7 +19,20 @@ char savedID[100];
 char savedType[50];
 
 
-//Abstract Syntax Tree
+///
+struct Scope* scopeStack[20];
+
+struct Scope * pop();
+void push(struct Scope *);
+int isEmpty();
+int isFull();
+
+
+int Top = -1;
+
+
+////////////////////////////////
+////////////Abstract Syntax Tree
 struct abstractNode {
 
 	char varName[50];
@@ -32,7 +45,7 @@ struct abstractNode *  makeAbstractNode(struct abstractNode * left, char name[50
 struct abstractNode* tPtr;
 struct abstractNode* fPtr;
 struct abstractNode* sPtr;
-
+//////////////////////
 %}
 
 %define parse.error verbose
@@ -59,6 +72,8 @@ struct abstractNode* sPtr;
 %left OR
 %left AND
 %left LE GE EQ NE LT GT /*<=, >=, ==, !=, <. >*/
+%left '+' '-'
+%left '*' '/'
 %right NOT
 
 
@@ -106,7 +121,22 @@ Function : Type DOUBLECOLON ID '('ArgListOpt')' CompoundStatement {
 
     prevScope = scope;
 
+		if(isEmpty() == 0) {
+
+				int count = Top;
+
+				for(int i = count ; i >= 0 ; i--) {
+
+						struct Scope * childScope = pop();
+						childScope->parent = scope;
+
+					printf("%d\n", Top);
+				}
+		}
+
+
     }
+
     else printf("Error: function %s is already declared\n",$3);
 
 }
@@ -163,7 +193,20 @@ Statement: Declaration {printf("Declaration\n");
 IfBlockStatements: IfStatement ElseIfStatement ElseStatement
 
 
-IfStatement: IF '(' Expression ')''{' StatementList '}'
+IfStatement: IF {
+printf("line no %d\n",yylineno);
+
+char integer[32];
+sprintf(integer,"%d",yylineno);
+
+char ifstring[64] = "if";
+strcat(ifstring, integer);
+printf("%s\n",ifstring);
+struct Scope * scope = scopeInsert(ifstring, &s1);
+push(scope);
+printf("push %d\n",Top);
+
+} '(' Expression ')''{' StatementList '}'
 
            ;
 
@@ -201,8 +244,7 @@ Expression: Expression LE Expression
 
 /*> Compound Statement block */
 
-Assignment: ID ':' Assignment { strcpy(savedID,$1);
- 	printf("line no %d\n",yylineno);}
+Assignment: ID ':' Assignment { strcpy(savedID,$1);}
           | ID '+' Assignment
           | ID '-' Assignment
           | ID '*' Assignment
@@ -226,7 +268,7 @@ Type:  INT { strcpy(savedType,$1); }
 
 
 %%
-
+//////////
 struct abstractNode *  makeAbstractNode(struct abstractNode * left, char name[50], struct abstractNode * right) {
 
 			struct abstractNode * node = (struct abstractNode *)malloc(sizeof(struct abstractNode));
@@ -235,13 +277,62 @@ struct abstractNode *  makeAbstractNode(struct abstractNode * left, char name[50
 			node->right = right;
 			return node;
 }
+//////////////
+
+int isEmpty() {
+
+		if(Top < 0)
+			return 1;
+		else return 0;
+
+}
+
+int isFull() {
+
+		if(Top > 20)
+			return 1;
+		else return 0;
+
+}
+
+void push(struct Scope * scope) {
+
+	if(isFull() == 0) {
+
+					++Top;
+					scopeStack[Top] = scope;
+	}
+
+	else printf("Stack overflow error\n");
+
+}
+
+struct Scope * pop() {
+
+	if(isEmpty() == 0) {
+
+			struct Scope * scope =  scopeStack[Top];
+			Top--;
+			return scope;
+	}
+	else printf("Stack underflow error\n");
+
+}
+
+void intiliazeScopeStack(int len) {
+
+	for(int i = 0; i< len; i++)
+		scopeStack[i] = NULL;
+
+}
 
 
 int main (void) {
   printf("Saad Salman\n");
+
 	intializeNodeArray(tempNodeArray);
   intializeScope(&s1);
-
+//	intiliazeScopeStack(20);
 	return yyparse ( );
 
 

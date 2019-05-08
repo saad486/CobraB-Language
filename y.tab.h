@@ -96,7 +96,7 @@ extern int yydebug;
 
 union YYSTYPE
 {
-#line 40 "scanner.y" /* yacc.c:1909  */
+#line 53 "scanner.y" /* yacc.c:1909  */
 
 	int iVal;
 	float fVal;
